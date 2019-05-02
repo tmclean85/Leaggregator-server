@@ -18,12 +18,18 @@ module.exports = function(app) {
   app.get('/', async (req, res) => {
     const player = req.query.summoner;
     const summoner = await getSummoner(player);
-    res.status(200).send(summoner)
+    const matches = await getMatches(summoner.accountId)
+    res.status(200).send(matches)
   })
 
   async function getSummoner(name) {
     const summonerDetails = await kayn.Summoner.by.name(name)
     return summonerDetails
   };
+
+  async function getMatches(id) {
+    const matches = await kayn.Matchlist.by.accountID(id)
+    return matches
+  }
 
 }
