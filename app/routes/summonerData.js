@@ -1,7 +1,7 @@
 module.exports = function(app) {
 
   const { Kayn, REGIONS } = require('kayn')
-  const kayn = Kayn('RGAPI-dbfa19ff-abc2-4097-be61-f58724bc23ef')({
+  const kayn = Kayn(/*****API KEY*****/)({
     region: REGIONS.NORTH_AMERICA,
     locale: 'en_US',
     debugOptions: {
