@@ -1,7 +1,7 @@
 module.exports = function(app) {
 
   const { Kayn, REGIONS } = require('kayn')
-  const kayn = Kayn(/******** API KEY ********/)({
+  const kayn = Kayn('RGAPI-dbfa19ff-abc2-4097-be61-f58724bc23ef')({
     region: REGIONS.NORTH_AMERICA,
     locale: 'en_US',
     debugOptions: {
@@ -27,13 +27,21 @@ module.exports = function(app) {
   // helpers will hit API endpoints for summoner and match data, as well as trim match data
 
   async function getSummoner(name) {
-    const summonerDetails = await kayn.Summoner.by.name(name)
-    return summonerDetails
+    try {
+      const summonerDetails = await kayn.Summoner.by.name(name)
+      return summonerDetails
+    } catch(e) {
+      console.log(e)
+    }
   };
 
   async function getMatches(id) {
-    const matches = await kayn.Matchlist.by.accountID(id)
-    return matches
+    try {
+      const matches = await kayn.Matchlist.by.accountID(id)
+      return matches
+    } catch(e) {
+      console.log(e)
+    }
   }
 
   // async function getTimeline(id) {
@@ -42,11 +50,15 @@ module.exports = function(app) {
   // }
 
   async function trimData(matchData) {
-    let matchArr = [];
-    for(let i = 0; i < 10; i++) {
-      if(matchData[i])matchArr.push(matchData[i])
+    try {
+      let matchArr = [];
+      for(let i = 0; i < 10; i++) {
+        if(matchData[i])matchArr.push(matchData[i])
+      }
+      return matchArr
+    } catch(e) {
+      console.log(e)
     }
-    return matchArr
   }
 
   async function getMatchData(name, matchArray) {
